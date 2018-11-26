@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Transformacion Punto de Origen</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: auto;
+      height: 100vh;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .container {
+      border: 1px solid red;
+      display: flex;
+      /* width: auto; */
+      padding: 20px;
+    }
+    .cuadrado {
+      width: 200px;
+      height: 200px;
+      background-color: #7dc900;
+      margin: 20px;
+      transition: .3s;
+    }
+    .container:hover .cuadrado.a{
+      /* transform-origin: top; */
+      /* transform-origin: bottom; */
+      /* transform-origin: right; */
+      /* transform-origin: left; */
+      /* transform-origin: bottom; */
+      /* transform: rotateY(45deg); */
+
+      /* transform-origin: x y; */
+      /* transform-origin: left top; */
+      transform: rotateZ(45deg);
+      transform-origin: left bottom;
+      /* transform-origin: right top; */
+      /* transform-origin: right bottom; */
+    }
+    /* .container:hover .cuadrado.b {
+      transform: skew(0, 45deg);
+    }
+    .container:hover .cuadrado.c {
+      transform: skew(44.6deg, 44.6deg);
+    } */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="cuadrado a">Hola Mundo!</div>
+    <!-- <div class="cuadrado b">Frente left</div>
+    <div class="cuadrado c">Frente</div> -->
+  </div>
+</body>
+</html>

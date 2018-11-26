@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Transformacion Translate</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: auto;
+      height: 100vh;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      perspective: 200px;
+      perspective-origin: center;
+      /* perspective-origin: x y */
+      /* perspective-origin: top; */
+      /* perspective-origin: bottom; */
+      /* perspective-origin: left; */
+      /* perspective-origin: right; */
+      /* perspective-origin: top right; */
+      /* perspective-origin: top left; */
+      /* perspective-origin: bottom right; */
+      /* perspective-origin: bottom left; */
+    }
+    .container {
+      border: 1px solid red;
+      display: flex;
+      /* width: auto; */
+    }
+    .cuadrado {
+      width: 200px;
+      height: 200px;
+      background-color: #7dc900;
+      margin: 20px;
+      transition: .3s;
+    }
+    .container:hover .cuadrado.a{
+    /* transform: translate(x); */
+    /* transform: translate(-100px);   */
+    /* transform: translate(x, y); */
+    /* transform: translate(100px, 100px); */
+    /* transform: translate(-100px, -100px); */
+    /* transform: translateY(100px); */
+    /* transform: translateZ(100px); */
+    transform: translate3d(30px, 30px, 30px);
+    }
+    .container:hover .cuadrado.b {
+      transform: translate3d(-20px, -20px, 20px);
+    }
+    .container:hover .cuadrado.c {
+      transform: translateZ(30px);
+    }
+    .container:hover .cuadrado.d {
+      transform: translateX(50px) translateZ(-50px);
+    }
+    .container:hover .cuadrado.e {
+      transform: translate(20px, -20px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="cuadrado a">Hola Mundo!</div>
+    <div class="cuadrado b">Frente left</div>
+    <div class="cuadrado c">Frente</div>
+    <div class="cuadrado d">Fondo</div>
+    <div class="cuadrado e">Frente right</div>
+  </div>
+</body>
+</html>
