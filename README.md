@@ -199,5 +199,111 @@ bottom(0% 100%);
 
 Estó indica que nosotros podemos hacer cambios de modo custom la forma en la cual se interpreta donde esté el punto de transformación. Lo cúal lo hace totalmente manejable.
 
+## Animaciones CSS
 
+Lo que necesita nuestra animación para funcionar es:
+
+- Un nombre de animación.
+- El tiempo que durará la animación.
+
+hay muchas más propiedades que se le pueden unir a *animation*, pero las básicas son la duración y el nombre.
+
+### Sintaxis
+
+Podemos aplicar animaciones a mi elemento desde que la página cargue o puedo aplicarla cuando hay un cambio dentro de algo es decir una interacción dentro de algo como por ejemplo el *:hover* 
+
+```css
+  animation-name: cuadrado;
+  animation-duration: 1s;
+```
+
+Ahora para hacer la animación usamos un *@keyframes* seguido del nombre de nuestra animación *cuadrado*, ahora abrimos llaves y decirle que va hacer mi animación.
+
+Aquí lo que tengo que hacer es decirle que voy a hacer en ese tiempo en ese segundo, y puedo dividir ese segundo en varias secciones, por ejemplo puedo darle un estado inicial y un estado final que puede ser un *0%* y un *100%* lo cúal me va hacer mover un elemento desde un inicio hasta un fin, ¿Qué hagó? lo que vamos a poner adentro, de momento cambiemos la opacidad.
+
+```CSS
+.container:hover .cuadrado.a{
+      animation-name: cuadrado;
+      animation-duration: 1s;
+    }
+
+    @keyframes cuadrado {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+```
+Estó quiere decir que en un segundo nuestro elemento se hará de un estado visible a un estado invisible. Está animación también se va a lanzar en el momento en el que cargué el navegador porque la animación va a ser leída como de las propiedades base que tiene cuadrado. Si recargamos la página notaremos que nuestro elemento se anima y se vuelve transparente totalmente y eso es lo que ocurre en un segundo.
+
+Aún hay más cosas que yo puedo hacer dentro de mi animación para que está tenga un mejor efecto y por ejemplo hacer más cosas con ellas, hay muchas más propiedades que se le pueden unir a *animation*, pero las básicas son la duración y el nombre.
+
+### Delay
+
+El *animation-delay* en el que yo puedo decir el tiempo que debe esperar antes de lanzarse la animación. Está propiedad puede ser útil si queremos que el sitio web cargué completamente si queremos que nuestro sitio web cargué primero y luego lanzar la animación.
+
+### Contador de Lanzamiento. 
+
+Está propiedad se usa como **animation-iteration-count** y acá yo le puedo decir el número de veces que yo quiero decirle que se repita mi animación como por ejemplo 2 veces, y algo que puedo hacer aquí que es interesante que funciona mucho en las animaciones por ejemplo es el poner ``animation-iteration-count: infinite;`` indicando que está sea infinita.
+
+### Suavisado de Animation
+
+Estó sería **animation-timing-function** en el cúal podemos configurar como funciona el suavisado de la animación que por defecto está en *ease*. Pero también tenemos más valores como:
+```css
+  animation-timing-function: ease;
+  animation-timing-function: ease-in;
+  animation-timing-function: ease-out;
+  animation-timing-function: ease-in-out;
+  animation-timing-function: ease-linear;
+``` 
+Linear indica que no tengamos ningun tipo de suavisado. Todo estó significa que podamos configurar de que forma nuestra animation se está lanzando y en que tiempo es decir en que momentos es más rápida, en que momentos es más lenta.
+
+Otra cosa que podemos hacer aquí es configurarle una **Curba de Bizier** 
+```css
+animation-timing-function: cubic-bezier(1, 1, 1, 1);
+``` 
+Si yo le pongo 1,1,1,1 estaría haciendo que nuestra animation sea totalmente lineal.
+
+### Dirección.
+
+A mi animación también puedo decirle en que dirección esta llendo, es decir de donde va a empezar ejemplo: (por el 0% o por 100%).
+
+Está propiedad se utiliza como **animation-direction** que por defecto está en normal, pero yo puedo decirle que por ejemplo valla en **reverse**, es decir si la animación era desaparecer ahora la animación sería aparecer de un estado no visible.
+
+Además de decirle que valla en **reverse** también puedo hacer que valla de forma alternada es decir que sea desde de visible-invisible-invisible-visible-etc. Como si fuera un rebote de la animacion lo cual nos va a hacer ahorrarnos unas lineas de código si queremos conseguir esté efecto. El valor que recibiría sería **alternate**
+
+Lo que hace **alternate** sería si yo tomará un valor intermedio, como por ejemplo el 50% si el principio es 0% y el final es 100% ejemplo:
+
+```css
+@keyframes cuadrado {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+```
+Estó significa hacer un rebote de lo que yo quiero hacer que ocurra en la animación, esto no hace falta alternate porque ya ocurre de manera mágica. Ahora nosotro tenemos un fade de lo que deseamos lograr lo que evita que se haga de una manera brusca.
+
+### Modo de Fución
+
+La propiedad se utiliza como **animation-fill-mode** indicá cual sería el relleno de mi animación que sería el valor final va a tener mi animación cuando está se ejecute, si nosotros hacemos que la animación solo se ejecute una vez, la animación volvera de su estado final a su estado inicial.
+
+Pero podemos configurar estó y decir que gracias a fill-mode decirle como es que quiero que mi elemento se vea cuando acabé la animación. Si yo le digo que: 
+``ànimation-fill-mode: forwards`` voy a decir que la animation se quedé con su estado final de está y que no regrese a su estado inicial.
+
+### Estado de la Animation
+
+Podemos configurar el estado de la animation y como se está moviendo, es decir se está rodando, es decir si esta en modo: play o si esta paused;
+Está propiedad se utiliza como **animation-play-state:** que por defecto está en modo **running**. Si yo inidicó que mi esta en paused mi animtion en el mismo momento en el que declaramos la misma lo que pasará es que no se animará nada.
+
+Pero el play-state: paused puede ayudar mucho si lo ponemos en otro lugar como por ejemplo en el *:hover* del elemento. Estó hará que cuando yo hagá el hover sobre mi elemento contenedor voy a hacer que el cuadrado hijo esté pausado osea la animation.
+
+Así es como podemos controlar el estado de esa animation y poder pausarla en algún momento, por ejemplo si queremos hacer un banner animado y que se vea todo el tiempo pero cuando el usuario quiera interactuar con el o simplemten pausarlo podemos recurrir a esté elemento.
 
