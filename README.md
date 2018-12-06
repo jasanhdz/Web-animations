@@ -307,3 +307,208 @@ Pero el play-state: paused puede ayudar mucho si lo ponemos en otro lugar como p
 
 Así es como podemos controlar el estado de esa animation y poder pausarla en algún momento, por ejemplo si queremos hacer un banner animado y que se vea todo el tiempo pero cuando el usuario quiera interactuar con el o simplemten pausarlo podemos recurrir a esté elemento.
 
+### Aceleración y curva de bezier
+
+Pensemos por un momento cuando lanzamos una moneda al aire la cual obtiene un movimiento gracias a la fuerza de la mano, pero la moneda no se mantiene a la misma velocidad todo el tiempo, sino que es afectada por la gravedad y gracias a la gravedad es que obtiene algo que se llama **aceleración** lo que modifica su velocidad y ese factor el algo que debemos considerar muchisímo dentro de nuestras animaciónes en css, es por eso que **este Párametro es totalmente configurable.**
+
+Por defecto las animaciones en CSS hacen que exista una aceleración por defecto, un **ease** por defecto, esto se puede configurar y se puede cambiar para lograr el efecto que nosotros queremos lograr.
+
+La propiedad que nosotros debemos de configurar para cambiar esté valor es **animation-timing-function**. Aunqué las formas de tener aceleraciones en css vienen preconfiguradas con los valores: ``ease, ease-in, ease-out, ease-in-out, linear``
+tenemos un valor que es **cubic-bezier(1,1,1,1);** o mejor concido como **la curva de bezier** el cual es un vector de moviento.
+
+### Valores de cubic-bezier
+
+#### ease
+
+El ease nos dará una especie de aceleración acerca de lo que nosotros queremos por defecto. Es por eso que la configuración por defecto en CSS en animaciones es *ease*, porque que si queremos hacer animaciónes y no queremos configurar simplemente lo dejamos ahí y vamos a tener un efecto simpático. Pero si queremos hacer modificaciones sobre como está funcionando nuestra aceleracion acerca de nuestras animaciones podemos cambiarla.
+
+#### ease-in
+
+Hace que nuestras animaciones tengan una aceleración más suave al inicio, es decir que vallan más lento. Estó seria empezar lento y terminar más rápido.
+
+#### ease-out
+
+Con está propiedad hariamos totalmente lo contrario a *ease-in* pues en esté caso la animacion empezaría rápida y se volvería más lenta al finalizar.
+
+#### ease-in-out 
+
+Está propiedad hace que la animación valla *lento* tanto al *inicio* como al *final* y con un *valor normal en el intermedio*. Tendríamos algó como un efecto pendular aquí, si nosotros quisieramos animar un pendulo está sería una perfecta aceleración.
+
+#### linear
+
+Está propiedad es más mécanica ya que no recibe ningún tipo de aceleración, es decir que valla a un ritmo constante. Está propiedad es útil cuando deseamos que nuestra animación no tenga aceleración. *La valocidad de el elemento es la misma todo el tiempo*.
+
+#### steps()
+
+Con está propiedad nosotros podemos configurar nuestra animación por pasos, es decir si queremos que nuestra animación valla a ciertos frames por segundo o por el tiempo de la animación. *Está propiedad recibe el número de pasos que deseamos que ejecute la animación.*
+
+#### Curva de Bezier
+
+Con esté valor podemos configurar que la aceleración de nuestra animación sea fluida a nuestro gustó.
+
+Está propiedad se usa como ``animation-timing-function: cubic-bezier(1, 1, 1, 1,);``
+Los párametros de cubic bezier son 4 y solo pueden ir (-1 a 1). Si lo dejamos actualmente con solo valores de 1 obtenetemos un efecto *linear*.
+
+Si nosotros cambiamos los párametros podemos hacer que la animación hagá cosas aún más interesantes, auque ir cambiando los valores es muy tedioso podemos recurrir a un recurso que se llamá [cubic-bezier.com](http://cubic-bezier.com/#.98,.1,.21,1.08).
+
+Y aquí nosotros podemos configurar nuestra curva de bezier a nuestró gusto, y además la podemos comparar con las curvas de bezier pre-establecidas por css como: *ease, ease-in, ease-out, ease-in-out y linear*. Despues de configurar la curva podemos copiar los valores generados y pegarlos en la propiedad de nuestro cubic-bezier.
+
+### Múltiples animaciones 
+
+Nosotros podemos incluir multiples animaciones a un mismo elemento.
+
+Para que esto ocurra necesitamos declarar una segunda animación, es decir poner otro *animation-name:* ¿Pero acaso tenemos que repetir esta propiedad tantas veces como la cantidad de animaciones que deseamos crear?
+
+No es necesario pues si queremos agregar otra animación podemos anidarlas, es decir agregarlas en la misma linea e ir separandolas por comas.
+
+De está misma manera podemos tomar todas la propiedades de animación que tengamos configuradas y por medio de comas podemos configurar algo custom para nuestra segunda animación, si no hacemos esto lo que va a ocurrir es que nuestras 2 animaciones van a tomar la configuración de la primera.
+
+Ahora para crear la segunda animación necesitamos agregar un nuevo **@keyframes** porque esté si tiene que ser totalmente nuevo y dentro de las llaves podemos poner lo que hará está nueva animación.
+
+**Nota:** Aparte de poder hacer una animación por porcentajes también podemos hacerla utilizando shortcuts de el 0% y el 100% y hay shortcuts para esto:
+
+- 0% = from
+- 100% = to
+
+Obviamente en el centro podemos de from y to podemos poner los valores intermedios en porcentajes que nosotros quieramos modificar.
+
+### Detectar eventos de animaciones CSS desde JavaScript
+
+En ocaciones nosotros vamos a querer encadenar animaciones y para eso tenemos que ver que una animación terminé y empezar una nueva o cambiar la animación que tenía mi elemento inicialmente.
+
+Haremos que nuestro ejemplo de la pelota tenga una tercer animación, la cual queremos aplicar cuando mi elemento regrese a su estado inicial es decir cuando terminé, esta última animación hará que mi elemento baje. Y se valla como si fuera una escalera. será una animación que será escalera 
+```css
+@keyframes escalera {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(500px);
+  }
+}
+```
+En esté caso estamos creando un keyframe para la tercerá animación escalera, la cúal hará caer a nuestra pelota cuando la primerá animación termine.
+
+Lo que deseamos hacer en esté caso es que la Pelota rebote y cuando termine la animación de los rebotes entonces caíga al suelo. Para estó lo que nosotros **debemos detectar es el Fin de una animación.**
+
+¿Como detectamos el fin de una animación?
+
+Lo podemos hacer con JavaScript, vamos a abrir una etiqueta javascript para escribir código js en nuestro documento. Lo primero que tenemos que hacer es declarar ese elemento que nosotros queremos escuchar el fin y el inicio de esas animaciónes.
+
+¿Quién es ese elemento? en esté caso es el circulo con la clase cuadrado el cúal vamos a agregarle un id para poder encontrarlo por su id desde javascript.
+
+Ahora vamos a escuchar eventos dentro de nuestro cuadrado de la siguiente manera:
+
+```javascript
+const $cuadrado = document.getElementById('cuadrado');
+$cuadrado.addEventListener('animationend', (event)=> {
+  console.log(event);
+})
+```
+Primero a nuestro cuadrado le decimos que evento queremos escuchar, y como segundo párametro le decimos que queremos hacer cuando se escuhe ese evento. El console.log nos ayudá a depurar y en esté caso imprimirá el envento cuando esté se ejecute es decir cuando la animación terminé.
+
+¿Pero cuando se terminá nuestra animación?
+
+En esté caso hay 1 animación que solo se ejecuta 1 sola vez que sería la segunda, nuestra animación de escalera que se ejecuta 1 sola vez y aquí es donde nosotros podemos escuchar el evento de que está cambió, como la otra se ejecuta de maneras infinitas, no hay forma de ver cuando se terminá, pero ese no es el problema en esté momento, pues lo que nos interesa es saber que se terminó nuestra primera animación y que se ejecute la segunda.
+
+Lo que vamos a hacer ahora es encadenar las animaciones de ``cuadrado rebote``, vamos a indicar que nuestro cuadrado sea infinito y que nuestro rebote sea de 20 veces.
+
+Ahora cuando nuestro evento se lanza nos lanzá varias cosas y en esté momento lo que nos interesá es obtener su animationName, en donde escribiremos una condición diciendole que cuando acabé el rebote le diremis que empiece lo de escalera, lo cuál lo haremos de la siguiente manera:
+```javascript
+const $cuadrado = document.getElementById('cuadrado');
+    // $cuadrado.addEventListener('¿nombre del event?', ¿que hago cuando el evento ocurra?)
+    $cuadrado.addEventListener('animationend', (event) => {
+      console.log(event.animationName);
+      if(event.animationName === 'rebote') {
+        // Si quisiera poner más de una animación las podria anidar 
+        $cuadrado.style.animationName = 'cuadrado escalera';
+        $cuadrado.style.animationDuration = '3s';
+        $cuadrado.style.animationIterationCount = '1';
+        $cuadrado.style.animationFillMode = 'forwards';
+      }
+    })
+```
+También podemos escuchar la iteración y el evento start
+
+```javascript
+$cuadrado.addEventListener('animationstart', (event) => {}
+$cuadrado.addEventListener('animationiteration', (event) => {}
+$cuadrado.addEventListener('animationend', (event) => {}
+```
+De está manera podemos hacer lo que quieramos con nuestras animaciones, programarlas y encadenarlas como nosotros quieramos.
+
+### Developer tools para animations
+
+Nosotros podemos aprender a medir que es lo que ocurre con nuestras animaciones y que es el rendimiento y cuanto le cuesta al navegador ejecutarlas y de una manera muy sencilla.
+
+Aquí lo que va a ocurrir es que vamos a aprender a medir que es lo que ocurre en el navegador cuando nuestra animacion o transicion se ejecuta y es que hay cambios, el render dentro de la pantalla tiene que cambiar porque el elemento se superpone a cosas o el elemento se está moviendo y la pantalla tiene que hacer un render de eso.
+
+¿Pero que es lo que ocurre y cuanto le cuesta?
+
+Podemos aprenderlo a ver dentro de chrome, para ello nosotros abrimos nuestro inpector de elementos y dentro de las developer tools nosotros podemos extender esas herramientas, haciendo click en mas->More tools, dentro podemos ver animations y rendering ambas nos van a ayudar en saber que es lo que ocurre con nuestra animación y cuanto le cuesta moverla al navegador.
+
+- **Pain Flashing:** Puedo hacer que se pinte algo en la pantalla cada vez que mi elemento se mueva.
+
+- **Layer Borders:** Puedo ver los cuadros que se dibujan con de todas la cajas que tienen los elementos html, que aunque nuestra pelota tenga un efecto circular gracias a border-radius vemos que al final del día es una caja porque todo en css es una caja.
+
+- FPS Meter: A cuantos frames por segundo ocurre nuestra animation y ahí podemos ver que el rendimiento y también podemos ver cuantos megas está consumiendo nuestra apliación dentro del navegador y ahí podemos saber si nuestra aplicación va rápido, es fluida o consume muchos recursos.
+
+Dentro de animations->tab Animations; podemos ver las animaciones que ocurren dentro del navegador, para ver estó tenemos que recargar la pantalla y vermos que se dibujan las animaciones que se están ejecutando. Y si hacemos hover en la animation que acabamos de ejecutar vemos que tenemos un preview de lo que ocurre en mi animation. 
+
+¡Pero no solo eso! Yo puedo tomar ese elemento y puedo modificarlo y decirle que ese elemento sea diferente y aquí es donde yo puedo aprobar diferentes tiempos de animation, cambiarle el rebote, cambiar cosas, podemos bajar el tiempo o aumentarlo, tambíen que la animation corra al 100%, 25% o 10%.
+
+### Optimizar render con will-change
+
+Para ello vamos a quitar el animation-name y dejar un objeto sin animation. Ahora vamos a ver lo que ocurre con los cambios dentro de los elementos, Vemos que cuando recargamos el navegador hay un pintado general, ese es el pintado que ocurre del primer render del navegador, es decir cuando los elementos se ejecutan en pantalla y el css es interpretado 
+
+#### ¿Pero cuantas veces va existir un Render?
+
+* Cada vez que exista un cambió. 
+
+Por ejemplo vamos a hacer que el elemento cuadrado sea de color rojo y le vamos a añadir una transición a ese elemento y que esa transition duré 3s y que cuando yo le *hagá hover a ese elemento:* cambiarle algó y ver que es lo que sucede en el navegador, en esté caso le vamos a cambiar la opacity y que se hagá 0 es decir que el elemento desaparezca, y si le hacemos hover, **el elemento desaparece pero existe un repintado ahí** , pues el navegador tiene que interpretar que tiene que haber un cambio, y simplemente dice: "OK voy a hacerlo" y lo hace, pero dependiendo del rendimiento que tenga el computador que renderize esa transition o animation estó va hacer más lento o más rápido *porque es en ese mismo momento donde le estamos avisando al navegador que tiene que cambiar*, entonces el tiene que improvisar y hacer lo mejor que puede para optimizar que esto ocurrá. 
+
+**¡Pero nosotros podemos avisarle al navegador antes de que esto ocurrá que va a cambiar para que el navegador optimicé antes y pueda darnos un mejor render**.
+
+**Will-Change:** quiere decir que algó va a cambiar y en esté caso lo que va a cambiar es *opacity*. Si guardamos y recargamos el navegador y hacemos hover al elemento, el elemento sigué desvaneciendose. Pero ahora el navegador ya no nos dice que hay un repintado de ese elemento es decir el Navegador ya sabe que tiene que renderear pero ya está preparado para hacerlo. Estó gracias a *will-change*.
+
+Podemos aplicarle will-change a varias propiedades como por ejemplo: opacity, transform, etc. Si nosotros cambiaremos varias propiedades en esté caso en el hover nosotros podemos encadenar estas propiedades en will-change, ya que si no ponemos todas el navegador no sabrá que tiene que cambiar y hará un render inprevisto y esto significá más consumo de recursos a nivel de *Hardware* 
+
+*Propiedades super optimizadas para will-changes:* opacity y tansform. Es por eso que las transformaciones son esenciales dentró del mundo de las animaciones porque las transformaciones está optimizadas para que estas se puedan ejecutar y no haiga cambios drásticos dentró del navegador, es decir que exista una aceleración por hardware y el navegador nos de lo mejor de si para que ese render ocurrá y se vea una animación totalmente, es por eso que **se recomienda OPTIMIZAR: trnasitions y animations con will-changes**.
+
+### Propiedades animables
+
+Existen muchas propiedades de los elementos web que se pueden animar, descarga el archivo y practica creando una animación con alguna de las propiedades que pueden ser animadas.
+
+[Propiedades Animables](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties)
+
+## Web Animations API (Animaciones en JS)
+
+CSS es muy genial y nos permite hacer las cosas de una manera muy sencilla, ¿Pero acaso yo puedo hacer animations de alguna otra manera que tál con JavaScript?
+
+Por supuesto que podemos y así es que podemos hacer una nueva animación, vamos a empezar a hacer animations con javascriptElement.animate que sería parte de la especificacion de la API de animations de JavaScript.
+
+Primero vamos a dibujar una pelota dentro de un container en el DOM el cual vamos a animar con JS, una vez teniendo nuestra pelota dibujada vamos a proceder a animarla con javascript.
+
+Segundo debemos recibir el elemento que queremos animar dentro de javascript podemos hacerlo con cualquier atributo aunque se recomienda hacerlo por medio de su id.
+
+Una vez que ya tenemos el objeto que queremos animar procedemos a hacer estó: la idea es que tengamos un *elemento.animate* aquí animate va a recibir 2 párametros, va a recibir los *keyframes* que son como ya hemos echo animations dentro de css que es un array, el segundo son las *opciones de configuración* que van a ser un objeto, pero ya que sabemos eso procedamos a aplicarlo a nuestro elemento.
+
+Adentro de los keyframes vamos a crear nuestra animation, que queremos hacer: por ejemplo hagamos que nuestra pelota se mueva de izquierda a derecha, para ello usaremos una tranformation que sería un translateX para movernos en el eje horizontal que empiece en 0 y terminé en 500px, ahora para finalizar la animation, tengo que crear otro objeto con el cúal vamos a poder definir ese tranform, así que arreglamos la primera y aquí tenemos la option de cuando empieza y cuando terminá, estó sería como un from y un to, veamos que es un sintaxis nueva pero la idea es la misma y aplicamos los mismo conocimientos que teníamos en css para hacer estó.
+
+Ahora dentro de las optiones yo tengo todo lo que podría hacer en css como por ejemplo: duration, delay, direction, easing, iterations, fill y 2 cosas nuevas que serían: **iterationStart, endDalay.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

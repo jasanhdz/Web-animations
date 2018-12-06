@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Animationes Multiples</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      width: auto;
+      height: 100vh;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .container {
+      border: 1px solid red;
+      width: 100%;
+      padding: 20px;
+    }
+    .cuadrado {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: red;
+      margin: 20px;
+      transition: 3s;
+      will-change: opacity, transform;
+    }
+    /* .container:hover .cuadrado {
+      animation-play-state: paused;
+    } */
+
+    .cuadrado:hover {
+      opacity: 0;
+      transform: scale(1.1);
+    }
+ 
+    @keyframes cuadrado {
+      0% {
+        /* opacity: 1; */
+        left: calc(0% - 40px);
+      }
+      100% {
+        /* opacity: 0; */
+        left: calc(100% - 200px);
+      }
+    }
+    @keyframes escalera {
+      from {
+        transform: translateY(0);
+      }
+      to {
+        transform: translateY(500px);
+      }
+    }
+    @keyframes rebote {
+      from {
+        transform: translateY(-40px);
+      }
+      to {
+        transform: translateY(60px) scale(1, .8);
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="cuadrado" id="cuadrado">Hola Mundo!</div>
+  </div>
+  <script>
+    const $cuadrado = document.getElementById('cuadrado');
+    // $cuadrado.addEventListener('¿nombre del event?', ¿que hago cuando el evento ocurra?)
+    $cuadrado.addEventListener('animationend', (event) => {
+      console.log(event.animationName);
+      if(event.animationName === 'rebote') {
+        $cuadrado.style.animationName = 'escalera';
+        $cuadrado.style.animationDuration = '3s';
+        $cuadrado.style.animationIterationCount = '1';
+        $cuadrado.style.animationFillMode = 'forwards';
+      }
+    })
+  </script>
+</body>
+</html>
