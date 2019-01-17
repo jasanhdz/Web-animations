@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Waves</title>
+  <style>
+  body {
+    margin : 0;
+  }
+  .container {
+    height: 500px;
+    background: #0f9bf6;
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .content {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 2em;
+    color: rgba(255, 255, 255, .8)
+  }
+  .waves {
+    position: absolute;
+
+    bottom: -135px;
+    height: 527px;
+    width: 100%;
+    overflow: hidden;
+  }
+  .wave {
+    left: -180px;
+    bottom: 0;
+
+    background: url('waves.png') center bottom no-repeat;
+    position: absolute;
+    width: 2402%;
+    height: 427px;
+
+    animation-name: wave;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+  }
+  .wave.a {
+    background-position: 0 -854px;
+  }
+  .wave.b {
+    animation-delay: .8s;
+    background-position: 0 -427px;
+  }
+  .wave.c {
+    animation-delay: 1.5s;
+    background-position: 0 0;
+  }
+  @keyframes wave{
+    0% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(-80px, 30px);
+    }
+    100% {
+      transform: translateX(160px) translateY(-60px);
+    }
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <h1>Hola mundo!!</h1>
+      <p>Estoy en el curso de animaciones para la web!</p>
+    </div>
+    <div class="waves">
+      <div class="wave a"></div>
+      <div class="wave b"></div>
+      <div class="wave c"></div>
+    </div>
+  </div>
+</body>
+</html>

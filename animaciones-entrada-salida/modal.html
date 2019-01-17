@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Modal</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: sans-serif, Arial, Helvetica;
+      flex-direction: column;
+    }
+    .overlay {
+      background: rgba(0,0,0,.7);
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 1.1s ease-in;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .platzi {
+      width: 100%;
+      position: relative;
+    }
+    .modal {
+      width: 520px;
+      border-radius: .6em;
+      background: white;
+      text-align: center;
+      animation: animationIn .9s forwards;  
+      position: relative;
+      padding: 2em;
+      z-index: 3;
+    }
+    .btn {
+      text-align: center;
+      padding: .6em .8em .8em;
+      background: lightgray;
+      border: none;
+      color: white;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: inset 0 -.2em rgb(0, 0, 0, .2);
+      outline: 0;
+      transition: .2s;
+      will-change: transform;
+    }
+    .btn:active {
+      transform: scale(.9);
+    }
+    .btn.primary {
+      background-color: #7dc800;
+    }
+    .btn.warning {
+      background-color: #ff463b;
+    }
+    .btn.clickme {
+      /* justify-self: flex-start; */
+      /* align-self: flex-start; */
+      top: 123px;
+      right: 380px;
+      position: absolute;
+      z-index:5;
+      height: 40px;
+      width: 140px;
+      background: #8bdc03;
+      font-size: 18px;
+    }
+    @keyframes animationIn {
+      0% {
+        transform: translateY(-3000px);
+      }
+      60% {
+        transform: translateY(30px);
+      }
+      75% {
+        transform: translateY(-15px);
+      } 
+      90% {
+        transform: translateY(5px);
+      }
+    }
+    @keyframes animationOut {
+      0% {
+        transform: translateY(5px);
+      }
+      60% {
+        transform: translateY(-15px);
+      }
+      75% {
+        transform: translateY(30px);
+      }
+      100% {
+        transform: translateY(-3000px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="btn primary clickme" id="click">Click me!!</button>
+  <img src="platzi.png" class="platzi" alt="">
+  <div class="overlay" id="overlay">
+    <div class="modal" id="modal">
+      <h1>Atención!</h1>
+      <p>Está apunto de crear una ventana de modal muy guay</p>
+      <p>Te gustó?</p>
+      <div class="modal-buttons">
+        <button class="btn primary" id="hide-modal">Si, está chido! :)</button>
+        <button class="btn warning">No, :(</button>
+      </div>
+    </div>
+  </div>
+  <script>
+  const $modal = document.getElementById('modal');
+  const $hideModal = document.getElementById('hide-modal');
+  const $overlay = document.getElementById('overlay');
+  const $click = document.getElementById('click');
+
+  $click.addEventListener('click', (event) => {
+    $overlay.classList.add('active');
+    $modal.style.animation = "animationIn .9s ease-in forwards";
+  })
+
+  $hideModal.addEventListener('click', (event) => {
+    $modal.style.animationName = "animationOut";
+    $modal.style.animationDuration = '.8s';
+    $overlay.classList.remove('active');
+  })
+  $overlay.addEventListener('click', (event) => {
+    if(event.srcElement.className == 'overlay active') {
+      $modal.style.animationName = "animationOut";
+      $modal.style.animationDuration = '.8s';
+      $overlay.classList.remove('active');
+    }
+  })
+  </script>
+</body>
+</html>

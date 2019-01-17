@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Animaciones de Entrada y Salida</title>
+	<style type="text/css">
+		body{
+			margin: 0;
+			padding: 0;
+			font-family: Arial;
+		}
+		img.platziPage{ width: 100%; }
+		h1{ margin: 0; }
+
+		.overlay{
+			background-color: rgba(0,0,0,0.8);
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			transition: 1s;
+			visibility: hidden;
+		}
+		.modal{
+			max-width:500px;
+			background-color: white;
+			padding: 20px;
+			border-radius: 10px;
+			position: relative;
+			transform: translateY(-2000px);
+		}
+		.botonerabutton{
+			font-size: 1.2em;
+			margin-right: 10px;
+			background-color: silver;
+			outline: none;
+			border: none;
+			padding: 5px15px;
+			color: white;
+			border-radius: 10px;
+			cursor: pointer;
+			transition: .3s;
+		}
+		button.agree{
+			background-color: #97c93e;
+		}
+		button.noagree{
+			background-color: #ff4842;
+		}
+		.botonerabutton.agree:hover{
+			background-color: #6d8f30;
+		}
+		.botonerabutton.noagree:hover{
+			background-color: #c73b36;
+		}
+		.botonerabutton:active{
+			transform: scale(.8);
+		}
+		.cuadrado{
+			height: 51px;
+			width: 130px;
+			position: absolute;
+			top: 140px;
+			right: 220px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: #7fc719;
+			border: 2px solid transparent;
+			border-radius: 10px;
+			font-weight: bold;
+			font-size: .9em;
+			text-align: center;
+			color: white;
+			cursor: pointer;
+			transition: .5s;
+		}
+		.cuadrado:hover{
+			border-color: white;
+		}
+		.equis{
+			width: 18px;
+			height: 18px;
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			transform: rotate(45deg);
+			cursor: pointer;
+		}
+		.equis.stick1,
+		.equis.stick2{
+			background-color: black;
+			position: absolute;
+			transition: .3s;
+		}
+		.equis.stick1{
+			width: 100%;
+			height: 5px;
+			top: calc(50% - 2.5px);
+		}
+		.equis.stick2{
+			width: 5px;
+			height: 100%;
+			left: calc(50% - 2.5px);
+		}
+		.equis:hover.stick1,
+		.equis:hover.stick2{
+			background-color: #ff4842;
+		}
+		.emoji{
+			width: 200px;
+			position: absolute;
+			top: calc(50% - 100px);
+			left: calc(50% - 100px);
+			transform: translateY(-2000px);
+		}
+		.textdesp{
+			position: absolute;
+			top: calc(50% + 100px);
+			/*right: calc(50% - 150px);*/
+			color: white;
+			font-size: 2em;
+			text-align: center;
+			width: 700px;
+			height: 100px;
+			opacity: 0;
+		}
+
+		/********** ANIMACIONES **********/
+
+		@keyframes in{/*Animación de entrada del modal*/
+			0%{
+				transform: translateY(-2000px);
+			}
+			60%{
+				transform: translateY(30px);
+			}
+			75%{
+				transform: translateY(-45px);
+			}
+			90%{
+				transform: translateY(20px);
+			}
+			100%{
+				transform: translateY(0);	
+			}
+		}
+		
+		@keyframes out{/*Animación de salida del modal*/
+			0%{
+				transform: translateY(0);	
+			}
+			10%{
+				transform: translateY(20px);
+			}
+			25%{
+				transform: translateY(-45px);
+			}
+			40%{
+				transform: translateY(30px);
+			}
+			100%{
+				transform: translateY(-2000px);
+			}
+		}
+
+		@keyframes showEmoji{/*Animacion de llegada, rebote y salida de los emojis*/
+			0%{
+				transform: translateY(-2000px);
+			}
+			20%{
+				transform: translateY(100%);
+			}
+			30%{
+				transform: translateY(0px);
+			}
+			70%{
+				transform: translateY(0px);
+			}
+			80%{
+				transform: translateY(100%);	
+			}
+			100%{
+				transform: translateY(-2000px);
+			}
+		}
+		
+		@keyframes showText{/*Animación de entrada y salida del texto de los emojis*/
+			0%{
+				opacity: 0;
+			}
+			16.66%{
+				opacity: 1;
+			}
+			83.33%{
+				opacity: 1;
+			}
+			100%{
+				opacity: 0;
+			}
+		}
+	</style>
+</head>
+<body>
+	<img src="https://static.platzi.com/media/files/platzi_1994b84f-b1a7-416e-ac2e-75c2a00f1cc4.png"class="platziPage"alt="Pagina de Platzi">
+	<!-- <img src="platzi.png" class="platziPage" alt="Pagina de Platzi"> -->
+	<div class="cuadrado" id="botonAparece">Click para ver el modal</div>
+	<div class="overlay" id="overlay">
+		<div class="modal" id="modal">
+			<div class="equis" id="x">
+				<div class="stick1"></div>
+				<div class="stick2"></div>
+			</div>
+			<h1>¡Qué gusto tenerte entre nosotros!</h1>
+			<p>¿Te gusto este modal?</p>
+			<div class="botonera">
+				<button class="agree" id="botonsi">Sí</button>
+				<button class="noagree" id="botonno">No</button>
+			</div>
+		</div>
+		<img src="http://icon-icons.com/icons2/860/PNG/512/happy_icon-icons.com_67810.png"class="emoji"id="happy"alt="Carita Feliz">
+		<!-- <img src="emojiHappy.png" class="emoji" id="happy" alt="Carita Feliz"> -->
+		<pid="textB" class="textdesp">¡Que bueno!<br>Llámame si quieres que te programe uno</p>
+		<img src="http://icon-icons.com/icons2/860/PNG/512/cry_icon-icons.com_67802.png"class="emoji"id="sad"alt="Carita Triste">
+		<!-- <img src="emojiSad.png" class="emoji" id="sad" alt="Carita Triste"> -->
+		<pid="textM" class="textdesp">¡Bueno!<br>¡Entonces hazlo tú!</p>
+	</div>
+	<script type="text/javascript">
+
+		/*********** DECLARACION DE LOS OBJETOS DEL DOM ***********/ 
+		const botonsi = document.getElementById("botonsi"); //boton de que si gusto
+		const botonno = document.getElementById("botonno"); //boton de que no gusto
+		const modal = document.getElementById("modal"); //el objeto modal
+		const overlay = document.getElementById("overlay"); //el objeto overlay
+		const muestra = document.getElementById("botonAparece"); //boton para mostrar el modal
+		const close = document.getElementById("x"); //boton de equis, para ocultar el modal
+		const emojiHappy = document.getElementById("happy"); //el emoji feliz
+		const textHappy = document.getElementById("textB"); //el texto del emoji feliz
+		const emojiSad = document.getElementById("sad"); //el emoji triste
+		const textSad = document.getElementById("textM"); //el texto del emoji triste
+		
+		/*********** FUNCIONES ***********/ 
+		function muestraEmoji(emoji, texto) {// muestra el emoji (feliz o triste) dependiendo cual boton se apreto
+			emoji.style.animation = 'showEmoji 5s';
+			emoji.style.animationDelay = '.5s';
+			texto.style.animation = 'showText 3s';
+			texto.style.animationDelay = '1.3s';
+			overlay.style.transitionDelay = "4s"; //se le aplica una demora para que de tiempo de ver el emoji aparecer
+		}
+
+		function hide(){// oculta el modal y el overlay
+			modal.style.animation = 'out 1.5s forwards';
+			overlay.style.visibility = "hidden";
+			overlay.style.transitionDelay = "0s"; //se resetea la demora a cero para que no haya ningun atraso puesto que el emoji no saldrá.
+		}
+		
+		function show(){// muestra el modal y el overlay
+			modal.style.animation = 'in 1.5s forwards';
+			overlay.style.visibility = "visible";
+			overlay.style.transitionDelay = "0s";
+			if(emojiHappy.style.animationName =='showEmoji'){
+				emojiHappy.style.animation =''; //Se le asigna vacio a animation para que cuando se vuelve a llamar, se le 
+				textHappy.style.animation =''; //vuelva a aplicar la animacion, sino esta solo se ejecutaria solo una vez.
+			}
+			if(emojiSad.style.animationName =='showEmoji'){
+				emojiSad.style.animation =''; // mismo caso que el antrior
+				textSad.style.animation ='';
+			}
+		}
+		
+		/*********** EVENTOS DE CLICK ***********/ 
+		muestra.addEventListener('click', show); //al hacer click, muestra el modal
+		close.addEventListener('click', hide); //al hacer click, oculta el modal
+		overlay.addEventListener('click', function(evento){ //oculta el modal y el overlay al hacer click sobre este ulltimo
+			if(evento.srcElement.className == 'overlay'){//se pregunta si el objeto donde se hizo click es el overlay, esto para evitar que si se clickea al hijo del overlay (el modal), este tambien se oculte.
+				hide();
+			}
+		});
+
+		//si se presiona el boton de si, se muestra el emoji contento
+		botonsi.addEventListener('click', function(){ //oculta el modal y muestra el emoji feliz
+			hide();
+			muestraEmoji(emojiHappy, textHappy);
+		});
+
+		//si se presiona el boton de no, se muestra el emoji triste
+		botonno.addEventListener('click', function(){ //oculta el modal y muestra el emoji triste
+			hide(); 
+			muestraEmoji(emojiSad, textSad);
+		});
+	</script>
+</body>
+</html>
